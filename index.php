@@ -11,7 +11,7 @@
 </head>
 <body>
     <?php require "blocks/header.php" ?>
-
+  <h2>ebalo</h2>
     <div class="container mt-5">
         <h3 class="mb-5">All ads</h3>
         <div class="d-flex flex-wrap"> 
