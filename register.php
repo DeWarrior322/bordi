@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<?php
+  require_once 'include/database.php';
+?>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -31,8 +34,12 @@
       <label for="floatingInput">Номер телефона</label>
     </div>
     <div class="form-floating mb-2">
-      <input type="password" name="userPass" class="form-control" id="floatingPassword" placeholder="Password">
+      <input type="password" name="userPassF" class="form-control" id="floatingPassword" placeholder="Password">
       <label for="floatingPassword">Пароль</label>
+    </div>
+    <div class="form-floating mb-2">
+      <input type="password" name="userPassS" class="form-control" id="floatingPassword" placeholder="Password">
+      <label for="floatingPassword">Повторите пароль</label>
     </div>
 
     
@@ -40,38 +47,40 @@
   </form>
 
 <?php
-  // Запись данных в БД
   if (isset($_POST['userName']) && isset($_POST['userEmail'])){
     // Переменные с формы
     $name = $_POST['userName'];
     $email = $_POST['userEmail'];
     $phone = $_POST['userPhone'];
-    $pass = $_POST['userPass'];
-    
-    // Параметры для подключения
-    $db_host = "localhost"; 
-    $db_user = "root"; // Логин БД
-    $db_password = "root"; // Пароль БД
-    $db_base = 'bordi_db'; // Имя БД
-    $db_table = "users"; // Имя Таблицы БД
-   
-    try {
-      
-        // Подключение к базе данных
-        $db = new PDO("mysql:host=$db_host;dbname=$db_base", $db_user, $db_password);
-        // Устанавливаем корректную кодировку
-        $db->exec("set names utf8");
-        // Собираем данные для запроса
-        $data = array( 'name' => $name, 'email' => $email, 'phone' => $phone, 'pass' => $pass); 
-        // Подготавливаем SQL-запрос
-        $query = $db->prepare("INSERT INTO $db_table (name, email, phone, pass) values (:name, :email, :phone, :pass)");
-        // Выполняем запрос с данными
-        $query->execute($data);
-        // Запишим в переменую, что запрос отрабтал
-        $result = true;
-    } catch (PDOException $e) {
-        // Если есть ошибка соединения или выполнения запроса, выводим её
-        print "Ошибка!: " . $e->getMessage() . "<br/>";
+    $passF = $_POST['userPassF'];
+    $passS = $_POST['userPassS'];
+
+    //Проверка на пустые поля
+    if($name === '' || $email === '' || $phone === '' || $passF === '' || $passS === '')
+    {
+      echo "Заполните поля";
+    }
+    // Проверка на совпадение пароля
+    elseif($passF !== $passS){
+      echo "Пароли не совпадают";
+
+    }
+    else{
+      try {
+          // Устанавливаем корректную кодировку
+          $db->exec("set names utf8");
+          // Собираем данные для запроса
+          $data = array( 'name' => $name, 'email' => $email, 'phone' => $phone, 'pass' => $passF); 
+          // Подготавливаем SQL-запрос
+          $query = $db->prepare("INSERT INTO $db_table (name, email, phone, pass) values (:name, :email, :phone, :pass)");
+          // Выполняем запрос с данными
+          $query->execute($data);
+          // Запишим в переменую, что запрос отработал
+          $result = true;
+          } catch (PDOException $e) {
+          // Если есть ошибка соединения или выполнения запроса, выводим её
+          print "Ошибка!: " . $e->getMessage() . "<br/>";
+      }
     }
     
     if ($result) {
@@ -79,6 +88,7 @@
     }
     
   }
+    
 ?>
 
 </main>
