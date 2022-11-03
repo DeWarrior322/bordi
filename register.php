@@ -66,6 +66,12 @@
 
     }
     else{
+      $query2 = ("SELECT email FROM users WHERE email='$email'");
+      if ($query){
+        echo "Аккаунт свободен"
+      }else{
+        echo "Аккаунт занят"
+      }
       try {
           // Устанавливаем корректную кодировку
           $db->exec("set names utf8");
