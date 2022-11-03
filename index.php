@@ -1,4 +1,7 @@
-  <!DOCTYPE html>
+<?php
+  require_once 'include/database.php';
+?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -11,19 +14,50 @@
 </head>
 <body>
     <?php require "blocks/header.php" ?>
-  <h2>ebalo</h2>
+    <?php
+    $db_table = "ads"; // Имя Таблицы БД
+    try {
+      // Устанавливаем корректную кодировку
+      $db->exec("set names utf8");
+      // Собираем данные для запроса
+      $data = array( 'name' => $name, 'email' => $email, 'phone' => $phone, 'pass' => $passF); 
+      // Подготавливаем SQL-запрос
+      $query = $db->prepare("SELECT * $db_table (name, image, user) values (:name, :email, :phone, :pass)");
+      // Выполняем запрос с данными
+      $query->execute($data);
+      // Запишим в переменую, что запрос отработал
+      $result = true;
+      } catch (PDOException $e) {
+      // Если есть ошибка соединения или выполнения запроса, выводим её
+      print "Ошибка!: " . $e->getMessage() . "<br/>";
+    }
+    $sql = "SELECT * FROM ads";
+    if($result = $conn->query($sql)){
+        foreach($result as $row){
+             
+            $id = $row["id"];
+            $name = $row["name"];
+            $image = $row["image"];
+
+        }
+      $rowsCount = $result->num_rows; // количество полученных строк
+    }
+
+   
+    
+    ?>
     <div class="container mt-5">
         <h3 class="mb-5">All ads</h3>
         <div class="d-flex flex-wrap"> 
         <?php
-        for($i = 0; $i < 12; $i++):
+        for($i = 0; $i < $rowsCount; $i++):
         ?>
-        <div class="card mb-4 shadow-sm">
+        <div class="card mb-3 shadow-sm mx-2 col-lg-3 ">
           <div class="card-header">
             <h4 class="my-0 font-weight-normal">100</h4>
           </div>
-          <div class="card-body">
-            <h1 class="card-title pricing-card-title"><?php echo ($i + 1) ?> <small class="text-muted">ad</small></h1>
+          <div class="card-body ">
+            <h1 class="card-title pricing-card-title"><?php echo ($i + 1) ?> <small class="text-muted"><?php $name?></small></h1>
             <ul class="list-unstyled mt-3 mb-4">
               <img src="images/<?php echo ($i + 1) ?>.jpg" class="img-thumbrail" alt="#">
             </ul>

@@ -16,7 +16,7 @@
 <main class="form-signin container-fluid col-md-3 mt-5">
   <!-- Форма регистрации -->
   <form method="POST" action="">
-    <img class="mb-4" src="images/Logo.png" alt="" width="150" height="120">
+    <img class="mb-4" src="images/Logo.png" alt="" width="107" height="150">
     <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
 
     <div class="form-floating mb-2">
@@ -47,6 +47,8 @@
   </form>
 
 <?php
+$db_table = "users"; // Имя Таблицы БД
+   
   if (isset($_POST['userName']) && isset($_POST['userEmail'])){
     // Переменные с формы
     $name = $_POST['userName'];
@@ -66,13 +68,12 @@
 
     }
     else{
-      $query2 = ("SELECT email FROM users WHERE email='$email'");
-      if ($query){
-        echo "Аккаунт свободен"
-      }else{
-        echo "Аккаунт занят"
+      $existense = array('users', ['email' => $email]);
+      if($existense['email'=== $email]){
+        echo "Данная почта уже зарегистрирована";
       }
-      try {
+      else{
+        try {
           // Устанавливаем корректную кодировку
           $db->exec("set names utf8");
           // Собираем данные для запроса
@@ -86,13 +87,14 @@
           } catch (PDOException $e) {
           // Если есть ошибка соединения или выполнения запроса, выводим её
           print "Ошибка!: " . $e->getMessage() . "<br/>";
+        }
+        if ($result) {
+          echo "Успех. Информация занесена в базу данных"; 
+        }
+        
       }
-    }
-    
-    if ($result) {
-    	echo "Успех. Информация занесена в базу данных"; 
-    }
-    
+       
+    }  
   }
     
 ?>
