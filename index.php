@@ -31,20 +31,7 @@
       // Если есть ошибка соединения или выполнения запроса, выводим её
       print "Ошибка!: " . $e->getMessage() . "<br/>";
     }
-    $sql = "SELECT * FROM ads";
-    if($result = $conn->query($sql)){
-        foreach($result as $row){
-             
-            $id = $row["id"];
-            $name = $row["name"];
-            $image = $row["image"];
-
-        }
-      $rowsCount = $result->num_rows; // количество полученных строк
-    }
-
-   
-    
+  
     ?>
     <div class="container mt-5">
         <h3 class="mb-5">All ads</h3>
