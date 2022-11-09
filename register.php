@@ -18,7 +18,7 @@
 <main class="form-signin container-fluid col-md-3 mt-5">
   <!-- Форма регистрации -->
   <form method="POST" action="">
-    <img class="mb-4" src="images/Logo.png" alt="" width="107" height="150">
+    <img class="mb-4" src="images\Logotype.png" alt="" width="107" height="150">
     <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
 
     <div class="form-floating mb-2">

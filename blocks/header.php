@@ -14,8 +14,7 @@
             Категории
           </a>
           <ul class="dropdown-menu dropdown-menu-dark">
-
-            <li><a class="dropdown-item" href="#">Авто</a></li>
+            <li><a class="dropdown-item" href="#" >Авто</a></li>
             <li><a class="dropdown-item" href="#">Недвижимость</a></li>
             <li><a class="dropdown-item" href="#">Услуги</a></li>
             <li><a class="dropdown-item" href="#">Вещи для дома</a></li>
@@ -27,7 +26,7 @@
         
         <li>
         <form class="d-flex" role="search">
-        <input class="form-control me-3 flex-nowrap" type="search" placeholder="Поиск по обьявлениям" aria-label="Search">
+        <input class="form-control me-4 flex-nowrap "  type="search" placeholder="Поиск по обьявлениям" aria-label="Search">
         <button class="btn btn-primary " type="submit">Поиск</button>
       </form>
         </li>
