@@ -1,6 +1,8 @@
 <?php
-  require_once 'include/database.php';
+  require 'include/db.php'
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,32 +14,15 @@
     
     <title>bordi</title>
 </head>
+
 <body>
     <?php require "blocks/header.php" ?>
-    <?php
-    $db_table = "ads"; // Имя Таблицы БД
-    try {
-      // Устанавливаем корректную кодировку
-      $db->exec("set names utf8");
-      // Собираем данные для запроса
-      $data = array( 'name' => $name, 'email' => $email, 'phone' => $phone, 'pass' => $passF); 
-      // Подготавливаем SQL-запрос
-      $query = $db->prepare("SELECT * $db_table (name, image, user) values (:name, :email, :phone, :pass)");
-      // Выполняем запрос с данными
-      $query->execute($data);
-      // Запишим в переменую, что запрос отработал
-      $result = true;
-      } catch (PDOException $e) {
-      // Если есть ошибка соединения или выполнения запроса, выводим её
-      print "Ошибка!: " . $e->getMessage() . "<br/>";
-    }
-  
-    ?>
+    
     <div class="container mt-5">
         <h3 class="mb-5">All ads</h3>
         <div class="d-flex flex-wrap"> 
         <?php
-        for($i = 0; $i < $rowsCount; $i++):
+        for($i = 0; $i < 12; $i++):
         ?>
         <div class="card mb-3 shadow-sm mx-2 col-lg-3 ">
           <div class="card-header">

@@ -1,5 +1,7 @@
 <?php
-  require_once 'include/database.php';
+  require_once 'include/connect.php';
+
+
 ?>
   <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +45,7 @@
     </div>
 
     
-    <button class="w-60 btn btn-lg btn-primary" type="submit">Создать аккаунт</button>
+    <button class="w-60 btn btn-lg btn-primary" name="button-reg" type="submit">Создать аккаунт</button>
   </form>
 
 <?php
@@ -65,7 +67,6 @@ $db_table = "users"; // Имя Таблицы БД
     // Проверка на совпадение пароля
     elseif($passF !== $passS){
       echo "Пароли не совпадают";
-
     }
     else{
       $existense = array('users', ['email' => $email]);
@@ -74,8 +75,6 @@ $db_table = "users"; // Имя Таблицы БД
       }
       else{
         try {
-          // Устанавливаем корректную кодировку
-          $db->exec("set names utf8");
           // Собираем данные для запроса
           $data = array( 'name' => $name, 'email' => $email, 'phone' => $phone, 'pass' => $passF); 
           // Подготавливаем SQL-запрос
@@ -91,9 +90,9 @@ $db_table = "users"; // Имя Таблицы БД
         if ($result) {
           echo "Успех. Информация занесена в базу данных"; 
         }
-        
+
       }
-       
+      
     }  
   }
     
