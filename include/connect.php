@@ -1,6 +1,6 @@
 <?php
     // Параметры для подключения
-    $db_host = "127.0.0.1:3308"; 
+    $db_host = "localhost"; 
     $db_user = "root"; // Логин БД
     $db_password = "root"; // Пароль БД
     $db_base = 'bordi_db'; // Имя БД
@@ -9,6 +9,7 @@
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
     );
 
+    // Попытка подключения к БД
     try {
         $pdo = new PDO("mysql:host=$db_host;dbname=$db_base;charset=utf8", $db_user, $db_password,$options);
     }catch(PDOException $i){
