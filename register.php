@@ -13,6 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     
 </head>
+<?php require "blocks/header.php" ?>
 <body class="text-center">
     
 <main class="form-signin container-fluid col-md-3 mt-5">
@@ -69,16 +70,12 @@ $db_table = "users"; // Имя Таблицы БД
       echo "Пароли не совпадают";
     }
     else{
-      $existense = array('users', ['email' => $email]);
-      if($existense['email'=== $email]){
-        echo "Данная почта уже зарегистрирована";
-      }
-      else{
+     
         try {
           // Собираем данные для запроса
           $data = array( 'name' => $name, 'email' => $email, 'phone' => $phone, 'pass' => $passF); 
           // Подготавливаем SQL-запрос
-          $query = $db->prepare("INSERT INTO $db_table (name, email, phone, pass) values (:name, :email, :phone, :pass)");
+          $query = $pdo->prepare("INSERT INTO $db_table (name, email, phone, pass) values (:name, :email, :phone, :pass)");
           // Выполняем запрос с данными
           $query->execute($data);
           // Запишим в переменую, что запрос отработал
@@ -91,7 +88,6 @@ $db_table = "users"; // Имя Таблицы БД
           echo "Успех. Информация занесена в базу данных"; 
         }
 
-      }
       
     }  
   }

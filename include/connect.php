@@ -1,6 +1,6 @@
 <?php
     // Параметры для подключения
-    $db_host = "127.0.0.1:3308"; 
+    $db_host = "localhost"; 
     $db_user = "root"; // Логин БД
     $db_password = "root"; // Пароль БД
     $db_base = 'bordi_db'; // Имя БД
