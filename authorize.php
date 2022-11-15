@@ -9,11 +9,10 @@
     
 </head>
 <body class="text-center">
-    
+<?php require "blocks/header.php" ?>
 <main class="form-signin container-fluid col-md-3 mt-5">
   <form>
-    <img class="mb-4" src="images/Logo.png" alt="" width="107" height="150">
-    <h1 class="h3 mb-3 fw-normal">Авторизация</h1>
+  <img class="mb-4" src="images\Logotype.png" alt="" width="107" height="150">    <h1 class="h3 mb-3 fw-normal">Авторизация</h1>
 
     <div class="form-floating mb-3">
       <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">

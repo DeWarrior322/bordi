@@ -33,7 +33,7 @@
     </div>
 
     <div class="form-floating mb-2">
-      <input type="text" name="userPhone" class="form-control" id="floatingInput" placeholder="phoneNumber">
+      <input type="text" name="userPhone" class="form-control" id="floatingInput" placeholder="phoneNumber" value ="+7" maxlength="12">
       <label for="floatingInput">Номер телефона</label>
     </div>
     <div class="form-floating mb-2">

@@ -22,7 +22,7 @@
     </div>
     <label for="floatingInput">Добавить фото</label>
     <div class="form-floating mb-2">
-  <input class="form-control" type="file" name="img" id="formFile">
+  <input class="form-control" type="file" name="image" id="formFile">
     </div>
     <button class="w-60 btn btn-lg btn-primary" name="btn_sub" type="submit">Загрузить</button>
   </form>
@@ -30,40 +30,26 @@
 
 
   <?php 
-
-  $db_table ="images";
-  $name = $_FILES['img']['name'];
-  $tmp_name = $_FILES['img']['tmp_name'];
+  global $pdo;
+  $db_table ="ads";
+  
+  $name = $_FILES['image']['name'];
+  $tmp_name = $_FILES['image']['tmp_name'];
 
   move_uploaded_file($tmp_name, "upload/" .$name);
-  $db_name = "upload/".$name;
+
+  $image_name = "upload/" .$name;
 
 
 
-  if (isset($_POST['name']) && isset($_POST['image'])){
-    // Переменные с формы
-    $namea = $_POST['name'];
-    $image = $_POST['img'];
+    //Проверка на пустые поля
+
+    $stmt = $pdo->prepare ("INSERT INTO ads (name, image_name) VALUES (:name, :image_name)");
+    $stmt -> bindParam(':name', $name);
+    $stmt -> bindParam(':image', $image_name);
+    $stmt -> execute();
+      
     
-
-    try {
-
-        $data = array( 'name' => $namea, 'image' => $image ); 
-        // Подготавливаем SQL-запрос
-        $query = $pdo->prepare("INSERT INTO $db_table (namea, img) values (:name, :img)");
-        // Выполняем запрос с данными
-        $query->execute($data);
-        // Запишим в переменую, что запрос отрабтал
-        $result = true;
-    } catch (PDOException $e) {
-        // Если есть ошибка соединения или выполнения запроса, выводим её
-        print "Ошибка!: " . $e->getMessage() . "<br/>";
-    }
-    
-    if ($result) {
-    	echo "Успех. Информация занесена в базу данных";
-    }
-}
 
   ?>
     
