@@ -1,6 +1,3 @@
-<?php require_once ("include/connect.php"); ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,8 +14,16 @@
   <!-- Форма регистрации -->
   <form method="POST" action="" enctype="multipart/form-data">
   <div class="form-floating mb-2">
-      <input type="name" name="name" class="form-control" id="floatingInput" placeholder="FIO">
-      <label for="floatingInput">ФИО</label>
+      <input type="name" name="username" class="form-control" id="floatingInput" placeholder="FIO">
+      <label for="floatingInput">имя пользователя</label>
+    </div>
+    <div class="form-floating mb-2">
+      <input type="name" name="name" class="form-control" id="floatingInput" placeholder="картинка">
+      <label for="floatingInput">название </label>
+    </div>
+    <div class="form-floating mb-2">
+      <input type="name" name="price" class="form-control" id="floatingInput" placeholder="картинка">
+      <label for="floatingInput">Цена </label>
     </div>
     <label for="floatingInput">Добавить фото</label>
     <div class="form-floating mb-2">
@@ -33,22 +38,29 @@
   global $pdo;
   $db_table ="ads";
   
-  $name = $_FILES['image']['name'];
+  $nameimg = $_FILES['image']['name'];
   $tmp_name = $_FILES['image']['tmp_name'];
-
-  move_uploaded_file($tmp_name, "upload/" .$name);
+  $username = $_POST['username'];
+  $imgname = $_POST['imgname'];
+  $image = $username + $name + ".jpg";
+  
+  move_uploaded_file($_FILES['image']['tmp_name'], __DIR__.'/upload/'. $_FILES["image"]['name']);
 
   $image_name = "upload/" .$name;
+  
+  require_once __DIR__.'/boot.php';
 
 
 
-    //Проверка на пустые поля
+$stmt = pdo()->prepare("INSERT INTO `ads` (`name`, `image` , `price` , `username`) VALUES (:name, :image, :price, :username)");
+$stmt->execute(['name' => $_POST['name'],
+'image' =>$_POST['image'],
+'price' =>  $_POST['price'],
+'username' =>  $_POST['username']
+]);
 
-    $stmt = $pdo->prepare ("INSERT INTO ads (name, image_name) VALUES (:name, :image_name)");
-    $stmt -> bindParam(':name', $name);
-    $stmt -> bindParam(':image', $image_name);
-    $stmt -> execute();
-      
+
+
     
 
   ?>
