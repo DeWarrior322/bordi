@@ -1,9 +1,4 @@
-<?php
-  require_once 'include/connect.php';
-
-
-?>
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -23,21 +18,21 @@
     <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
 
     <div class="form-floating mb-2">
-      <input type="name" name="userName" class="form-control" id="floatingInput" placeholder="FIO">
+      <input type="name" name="username" class="form-control" id="floatingInput" placeholder="FIO">
       <label for="floatingInput">ФИО</label>
     </div>
 
     <div class="form-floating mb-2">
-      <input type="email" name="userEmail" class="form-control" id="floatingInput" placeholder="name@example.com">
+      <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
       <label for="floatingInput">Электронная почта</label>
     </div>
 
     <div class="form-floating mb-2">
-      <input type="text" name="userPhone" class="form-control" id="floatingInput" placeholder="phoneNumber" value ="+7" maxlength="12">
+      <input type="text" name="phone" class="form-control" id="floatingInput" placeholder="phoneNumber" value ="+7" maxlength="12">
       <label for="floatingInput">Номер телефона</label>
     </div>
     <div class="form-floating mb-2">
-      <input type="password" name="userPassF" class="form-control" id="floatingPassword" placeholder="Password">
+      <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
       <label for="floatingPassword">Пароль</label>
     </div>
     <div class="form-floating mb-2">
@@ -50,47 +45,19 @@
   </form>
 
 <?php
-$db_table = "users"; // Имя Таблицы БД
-   
-  if (isset($_POST['userName']) && isset($_POST['userEmail'])){
-    // Переменные с формы
-    $name = $_POST['userName'];
-    $email = $_POST['userEmail'];
-    $phone = $_POST['userPhone'];
-    $passF = $_POST['userPassF'];
-    $passS = $_POST['userPassS'];
+require_once __DIR__.'/boot.php';
+$stmt = pdo()->prepare("SELECT * FROM `users` WHERE `username` = :username");
+$stmt->execute(['username' => $_POST['username']]);
 
-    //Проверка на пустые поля
-    if($name === '' || $email === '' || $phone === '' || $passF === '' || $passS === '')
-    {
-      echo "Заполните поля";
-    }
-    // Проверка на совпадение пароля
-    elseif($passF !== $passS){
-      echo "Пароли не совпадают";
-    }
-    else{
-     
-        try {
-          // Собираем данные для запроса
-          $data = array( 'name' => $name, 'email' => $email, 'phone' => $phone, 'pass' => $passF); 
-          // Подготавливаем SQL-запрос
-          $query = $pdo->prepare("INSERT INTO $db_table (name, email, phone, pass) values (:name, :email, :phone, :pass)");
-          // Выполняем запрос с данными
-          $query->execute($data);
-          // Запишим в переменую, что запрос отработал
-          $result = true;
-          } catch (PDOException $e) {
-          // Если есть ошибка соединения или выполнения запроса, выводим её
-          print "Ошибка!: " . $e->getMessage() . "<br/>";
-        }
-        if ($result) {
-          echo "Успех. Информация занесена в базу данных"; 
-        }
 
-      
-    }  
-  }
+
+$stmt = pdo()->prepare("INSERT INTO `users` (`username`, `password` , `email` , `phone`) VALUES (:username, :password, :email, :phone)");
+$stmt->execute(['username' => $_POST['username'],
+'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+'email' =>  $_POST['email'],
+'phone' =>  $_POST['phone']
+]);
+
     
 ?>
 
