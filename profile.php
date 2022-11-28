@@ -25,7 +25,7 @@ require_once ("include/connect.php");
 <div class="row mx-1">
   <div class="col-lg-3">
     <h3 class="mx-3">Имя Фамилия</h3>
-    <img class="mx-5 rounded-circle" width="120px" height="120px" src="images/horosh.jpg"  alt="">
+    <img class="mx-5 rounded-circle" width="120px" height="120px" src="images/no_image.png"  alt="">
   </div>
   <div class="col-5">
     <h3>Ваши обьявления</h3>

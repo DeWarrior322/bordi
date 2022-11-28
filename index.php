@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(E_ALL);
 require_once ("include/connect.php");
 
   global $pdo;
@@ -74,7 +77,7 @@ require_once ("include/connect.php");
           <div class="card-body ">
             <h6 class="card-title pricing-card-title" >Категория: <?= $ad['category'];?> <small class="text-muted"><?php $name?></small></h1>
             <ul class="list-unstyled mt-3 mb-4">
-              <img src="<?= $ad['image']?>.jpg" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="#">
+              <img src="upload/<?= $ad['image']?>" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="#">
             </ul>
             <h5 class="card-title pricing-card-price">Цена: <?= $ad['price'];?>  ₽ <small class="font-weight-light"></small></h1>
             <h5 class="card-title pricing-card-footer">Автор: <?= $ad['user'];?> <small class="text-muted"></small></h1>

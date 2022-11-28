@@ -45,20 +45,36 @@
   </form>
 
 <?php
-require_once __DIR__.'/boot.php';
-$stmt = pdo()->prepare("SELECT * FROM `users` WHERE `username` = :username");
-$stmt->execute(['username' => $_POST['username']]);
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(E_ALL);
 
+  require_once __DIR__.'/boot.php';
+  $stmt = pdo()->prepare("SELECT * FROM `users` WHERE `username` = :username");
+  $stmt->execute(['username' => $_POST['username']]);
+  $username = $_POST['username'];
+  $email = $_POST['email'];
+  $phone = $_POST['phone'];
+  $password = $_POST['password'];
+  $userPassS = $_POST['userPassS'];
 
+  if($username === '' || $email === '' || $phone === '' || $password === '' || $userPassS === '')
+  {
+    echo "Заполните поля";
+  }
+  else{
+    $stmt = pdo()->prepare("INSERT INTO `users` (`username`, `password` , `email` , `phone`) VALUES (:username, :password, :email, :phone)");
+    $stmt->execute(['username' => $_POST['username'],
+    'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+    'email' =>  $_POST['email'],
+    'phone' =>  $_POST['phone']
+    ]);
 
-$stmt = pdo()->prepare("INSERT INTO `users` (`username`, `password` , `email` , `phone`) VALUES (:username, :password, :email, :phone)");
-$stmt->execute(['username' => $_POST['username'],
-'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
-'email' =>  $_POST['email'],
-'phone' =>  $_POST['phone']
-]);
+  }
+  header('Location: localhost/bordi/authorize.php');
+  exit;
 
-    
+  
 ?>
 
 </main>

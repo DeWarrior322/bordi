@@ -14,7 +14,7 @@
   <!-- Форма регистрации -->
   <form method="POST" action="" enctype="multipart/form-data">
   <div class="form-floating mb-2">
-      <input type="name" name="username" class="form-control" id="floatingInput" placeholder="FIO">
+      <input type="name" name="user" class="form-control" id="floatingInput" placeholder="FIO">
       <label for="floatingInput">имя пользователя</label>
     </div>
     <div class="form-floating mb-2">
@@ -24,6 +24,10 @@
     <div class="form-floating mb-2">
       <input type="name" name="price" class="form-control" id="floatingInput" placeholder="картинка">
       <label for="floatingInput">Цена </label>
+    </div>
+    <div class="form-floating mb-2">
+      <input type="name" name="category" class="form-control" id="floatingInput" placeholder="картинка">
+      <label for="floatingInput">Категория </label>
     </div>
     <label for="floatingInput">Добавить фото</label>
     <div class="form-floating mb-2">
@@ -35,29 +39,32 @@
 
 
   <?php 
+  ini_set('display_errors', 0);
+  ini_set('display_startup_errors', 0);
+  error_reporting(E_ALL);
+  
   global $pdo;
   $db_table ="ads";
   
-  $nameimg = $_FILES['image']['name'];
+  $name = $_FILES['image']['name'];
   $tmp_name = $_FILES['image']['tmp_name'];
   $username = $_POST['username'];
   $imgname = $_POST['imgname'];
   $image = $username + $name + ".jpg";
   
-  move_uploaded_file($_FILES['image']['tmp_name'], __DIR__.'/upload/'. $_FILES["image"]['name']);
+  move_uploaded_file($_FILES['image']['tmp_name'], __DIR__.'upload/'. $_FILES["image"]['name']);
 
   $image_name = "upload/" .$name;
-  
   require_once __DIR__.'/boot.php';
 
-
-
-$stmt = pdo()->prepare("INSERT INTO `ads` (`name`, `image` , `price` , `username`) VALUES (:name, :image, :price, :username)");
-$stmt->execute(['name' => $_POST['name'],
-'image' =>$_POST['image'],
-'price' =>  $_POST['price'],
-'username' =>  $_POST['username']
-]);
+var_dump($nameimg);
+  $stmt = pdo()->prepare("INSERT INTO `ads` (`name`, `image` , `price` , `user`, `category`) VALUES (:name, :image, :price, :user, :category)");
+  $stmt->execute(['name' => $_POST['name'],
+  'image' =>$nameimg,
+  'price' =>  $_POST['price'],
+  'user' =>  $_POST['user'],
+  'category' => $_POST['category']
+  ]);
 
 
 

@@ -28,6 +28,10 @@
 </main>
 
 <?php
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(E_ALL);
+
 require_once __DIR__.'/boot.php';
 
 // Проверяем наличие пользователя с указанным юзернеймом
@@ -41,9 +45,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // Проверяем пароль
 if (password_verify($_POST['password'], $user['password'])) {
-    // Проверяем, не нужно ли использовать более новый алгоритм
-    // или другую алгоритмическую стоимость
-    // Например, если вы поменяете опции хеширования
+
     if (password_needs_rehash($user['password'], PASSWORD_DEFAULT)) {
         $newHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $stmt = pdo()->prepare('UPDATE `users` SET `password` = :password WHERE `username` = :username');

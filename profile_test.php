@@ -1,6 +1,7 @@
 <?php
 require_once ("include/connect.php");
 
+
   global $pdo;
   $stmt = $pdo->query('SELECT * FROM ads');
   $ads = $stmt->fetchAll();
@@ -26,7 +27,7 @@ require_once ("include/connect.php");
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 <div class="col-lg-2">
     <h3>Имя Фамилия</h3>
-    <img class="rounded-circle" width="120px" height="120px" src="images/horosh.jpg"  alt="">
+    <img class="rounded-circle" width="120px" height="120px" src="images/no_image.png"  alt="">
   </div>
         <h3 class="col">Ваши обьявления</h3>
         <div class="col">
@@ -75,6 +76,10 @@ require_once ("include/connect.php");
     </div>
   </div>
 </div>
+
+<?php
+
+ ?>
 
 
 
